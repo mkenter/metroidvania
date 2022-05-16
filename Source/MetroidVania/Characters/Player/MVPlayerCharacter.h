@@ -13,5 +13,8 @@ UCLASS()
 class METROIDVANIA_API AMVPlayerCharacter : public AMVCharacterBase
 {
 	GENERATED_BODY()
+
+public:
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	
 };
