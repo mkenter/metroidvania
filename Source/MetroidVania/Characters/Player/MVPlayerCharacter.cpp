@@ -3,3 +3,7 @@
 
 #include "MVPlayerCharacter.h"
 
+void AMVPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
