@@ -3,14 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AbilitySystemComponent.h"
-#include "MVBaseAbilitySystemComponent.generated.h"
+#include "Camera/CameraActor.h"
+#include "MVCameraActor.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class METROIDVANIA_API UMVBaseAbilitySystemComponent : public UAbilitySystemComponent
+class METROIDVANIA_API AMVCameraActor : public ACameraActor
 {
 	GENERATED_BODY()
+	
 };

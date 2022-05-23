@@ -15,6 +15,16 @@ class METROIDVANIA_API AMVPlayerCharacter : public AMVCharacterBase
 	GENERATED_BODY()
 
 public:
+
+	AMVPlayerCharacter();
+	
+	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+
+protected:
+	UFUNCTION()
+	void Move(float Value);
+
+private:
 	
 };

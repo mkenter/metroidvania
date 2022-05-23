@@ -3,14 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AbilitySystemComponent.h"
-#include "MVBaseAbilitySystemComponent.generated.h"
+#include "GameFramework/PlayerController.h"
+#include "MVPlayerController.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class METROIDVANIA_API UMVBaseAbilitySystemComponent : public UAbilitySystemComponent
+class METROIDVANIA_API AMVPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+	
 };

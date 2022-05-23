@@ -19,5 +19,5 @@ public:
 	UMVGameplayAbility();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Abilities")
-	EAbilitySystemInputID AbilityInputID {EAbilitySystemInputID::None};
+	EAbilitySystemInputID AbilityInputID = EAbilitySystemInputID::None;
 };

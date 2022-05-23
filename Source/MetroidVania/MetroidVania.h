@@ -10,6 +10,6 @@ enum class EAbilitySystemInputID : uint8
 	None,
 	Confirm,
 	Cancel,
-	FirePrimary,
+	PrimaryAttack,
 	Dash
 };

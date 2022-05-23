@@ -12,10 +12,16 @@ void UMVBaseAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UMVBaseAttributeSet, Health);
+	DOREPLIFETIME_CONDITION_NOTIFY(UMVBaseAttributeSet, Health, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UMVBaseAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
 }
 
-void UMVBaseAttributeSet::OnRep_Health(const FGameplayAttributeData& OldValue)
+void UMVBaseAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth)
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UMVBaseAttributeSet, Health, OldValue);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UMVBaseAttributeSet, Health, OldHealth);
+}
+
+void UMVBaseAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UMVBaseAttributeSet, MaxHealth, OldMaxHealth);
 }
