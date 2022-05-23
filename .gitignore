@@ -76,3 +76,7 @@ DerivedDataCache/*
 
 # ME
 Plugins/
+Content/Paragon*
+
+# Remove these if needed if something doesn't work after cloning project
+Content/__*
