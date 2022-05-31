@@ -3,12 +3,12 @@
 
 #include "MVPlayerCharacter.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
 #include "MetroidVania/MetroidVania.h"
 #include "MetroidVania/Characters/Abilities/MVBaseAbilitySystemComponent.h"
 
-AMVPlayerCharacter::AMVPlayerCharacter()
+AMVPlayerCharacter::AMVPlayerCharacter() : bIsDucking(false)
 {
-	// JumpMaxCount = 2;
 }
 
 void AMVPlayerCharacter::BeginPlay()
@@ -21,6 +21,7 @@ void AMVPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	PlayerInputComponent->BindAxis("Move", this, &AMVPlayerCharacter::Move);
+	PlayerInputComponent->BindAxis("Duck", this, &AMVPlayerCharacter::Duck);
 
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
@@ -41,10 +42,24 @@ void AMVPlayerCharacter::Move(float Value)
 	{
 		return;
 	}
-
-	const FVector MovementVector = FVector(1.f, 0.f, 0.f);	
-	AddMovementInput(MovementVector, Value);
-
+	
 	const float Yaw = Value < 0.f ? 180.f : 0;
 	GetController()->SetControlRotation(FRotator(0.f, Yaw, 0.f));
+
+	if (!bIsDucking)
+	{
+		const FVector MovementVector = FVector(1.f, 0.f, 0.f);	
+		AddMovementInput(MovementVector, Value);
+	}
+}
+
+void AMVPlayerCharacter::Duck(float Value)
+{
+	if (Value > -0.2f || GetCharacterMovement()->IsFalling())
+	{
+		bIsDucking = false;
+		return;
+	}
+
+	bIsDucking = true;
 }

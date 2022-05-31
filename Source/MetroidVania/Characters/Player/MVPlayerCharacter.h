@@ -25,6 +25,14 @@ protected:
 	UFUNCTION()
 	void Move(float Value);
 
+	UFUNCTION()
+	void Duck(float Value);
+
 private:
+	bool bIsDucking;
+
+public:
+
+	FORCEINLINE bool GetIsDucking() const { return bIsDucking; }
 	
 };
