@@ -25,6 +25,7 @@ void UMVPlayerCharacterAnimInstance::UpdateAnimationProperties(const float Delta
 		Speed = SpeedVelocity.Size();
 		bIsInAir = CharacterMovementComponent->IsFalling();
 		bIsAccelerating = CharacterMovementComponent->GetCurrentAcceleration().Size() > 0.f;
+		bIsDucking = PlayerCharacter->GetIsDucking();
 		
 		const FRotator MovementRotation = UKismetMathLibrary::MakeRotFromX(PlayerCharacter->GetVelocity());
 		bShouldTurn = MovementRotation.Yaw != LastMovementDirection;

@@ -42,8 +42,4 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-
-	
-
-private:
 };
