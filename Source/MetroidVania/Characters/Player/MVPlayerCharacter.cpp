@@ -3,17 +3,29 @@
 
 #include "MVPlayerCharacter.h"
 
+#include "GameplayTagsManager.h"
+#include "Engine/SkeletalMeshSocket.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "MetroidVania/MetroidVania.h"
 #include "MetroidVania/Characters/Abilities/MVBaseAbilitySystemComponent.h"
+#include "MetroidVania/Items/MVWeapon.h"
 
-AMVPlayerCharacter::AMVPlayerCharacter() : bIsDucking(false)
+AMVPlayerCharacter::AMVPlayerCharacter() : bIsDucking(false), bJumped(false)
 {
+	PrimaryActorTick.bCanEverTick = true;
+	JumpMaxCount = 2;
 }
 
 void AMVPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	EquipWeapon(SpawnDefaultWeapon());
+}
+
+void AMVPlayerCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
 }
 
 void AMVPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -29,10 +41,25 @@ void AMVPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	if (AbilitySystemComponent && InputComponent)
 	{
 		const FGameplayAbilityInputBinds Binds("Confirm", "Cancel", "EAbilitySystemInputID",
-											  static_cast<int32>(EAbilitySystemInputID::Confirm),
-											  static_cast<int32>(EAbilitySystemInputID::Cancel));
+		                                       static_cast<int32>(EAbilitySystemInputID::Confirm),
+		                                       static_cast<int32>(EAbilitySystemInputID::Cancel));
 
 		AbilitySystemComponent->BindAbilityActivationToInputComponent(InputComponent, Binds);
+	}
+}
+
+void AMVPlayerCharacter::Jump()
+{
+	if (JumpCurrentCount > 0 && !CanDoubleJump())
+	{
+		return;
+	}
+	
+	Super::Jump();
+	
+	if (JumpCurrentCount < JumpMaxCount)
+	{
+		bJumped = true;
 	}
 }
 
@@ -42,13 +69,13 @@ void AMVPlayerCharacter::Move(float Value)
 	{
 		return;
 	}
-	
+
 	const float Yaw = Value < 0.f ? 180.f : 0;
 	GetController()->SetControlRotation(FRotator(0.f, Yaw, 0.f));
 
 	if (!bIsDucking)
 	{
-		const FVector MovementVector = FVector(1.f, 0.f, 0.f);	
+		const FVector MovementVector = FVector(1.f, 0.f, 0.f);
 		AddMovementInput(MovementVector, Value);
 	}
 }
@@ -62,4 +89,42 @@ void AMVPlayerCharacter::Duck(float Value)
 	}
 
 	bIsDucking = true;
+}
+
+bool AMVPlayerCharacter::CanDoubleJump() const
+{
+	FGameplayTagContainer TagContainer;
+	const FGameplayTag DoubleJumpTag = UGameplayTagsManager::Get().RequestGameplayTag(
+		"Player.Abilities.Passive.Gained.DoubleJump");
+
+	AbilitySystemComponent->GetOwnedGameplayTags(TagContainer);
+
+	return TagContainer.HasTag(DoubleJumpTag);
+}
+
+AMVWeapon* AMVPlayerCharacter::SpawnDefaultWeapon() const
+{
+	if (DefaultWeaponClass)
+	{
+		return GetWorld()->SpawnActor<AMVWeapon>(DefaultWeaponClass);
+	}
+
+	return nullptr;
+}
+
+void AMVPlayerCharacter::EquipWeapon(AMVWeapon* WeaponToEquip)
+{
+	if (WeaponToEquip)
+	{
+		WeaponToEquip->OnEquip(this);
+
+		const USkeletalMeshSocket* WeaponSocket = GetMesh()->GetSocketByName(FName("WeaponSocket"));
+
+		if (WeaponSocket)
+		{
+			WeaponSocket->AttachActor(WeaponToEquip, GetMesh());
+		}
+
+		EquippedWeapon = WeaponToEquip;
+	}
 }

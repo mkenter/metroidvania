@@ -30,8 +30,7 @@ protected:
 
 	UPROPERTY()
 	class UMVBaseAttributeSet* BaseAttributeSet;
-
-
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities")
 	TSubclassOf<class UGameplayEffect> DefaultAttributeEffect;
 

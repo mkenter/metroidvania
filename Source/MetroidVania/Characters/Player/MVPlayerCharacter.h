@@ -19,7 +19,9 @@ public:
 	AMVPlayerCharacter();
 	
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+	virtual void Jump() override;
 
 protected:
 	UFUNCTION()
@@ -28,11 +30,29 @@ protected:
 	UFUNCTION()
 	void Duck(float Value);
 
+	bool CanDoubleJump() const;
+
+	class AMVWeapon* SpawnDefaultWeapon() const;
+
+	void EquipWeapon(AMVWeapon* WeaponToEquip); 
+
 private:
 	bool bIsDucking;
+	bool bJumped;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	AMVWeapon* EquippedWeapon;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<AMVWeapon> DefaultWeaponClass;
 
 public:
 
 	FORCEINLINE bool GetIsDucking() const { return bIsDucking; }
+
+	FORCEINLINE bool GetJumped() const { return bJumped; }
+	FORCEINLINE void SetJumped(const bool NewJumped) { bJumped = NewJumped; }
+
+	FORCEINLINE void GiveDoubleJump() { JumpMaxCount = 2; }
 	
 };
