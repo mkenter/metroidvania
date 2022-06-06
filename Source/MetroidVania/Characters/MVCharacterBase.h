@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
-#include <GameplayEffectTypes.h>
 #include "MVCharacterBase.generated.h"
 
 
@@ -37,8 +36,14 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities")
 	TArray<TSubclassOf<class UMVGameplayAbility>> DefaultAbilities;
 
+	float GetHealth() const;
+
 public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+	void Die();
+
+	FORCEINLINE bool IsAlive() const { return GetHealth() > 0.f; }
 };

@@ -26,7 +26,7 @@ void AMVCharacterBase::BeginPlay()
 void AMVCharacterBase::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-
+	
 	/**
 	 * Server GAS init
 	 */
@@ -38,7 +38,7 @@ void AMVCharacterBase::PossessedBy(AController* NewController)
 void AMVCharacterBase::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
-
+	
 	/**
 	 * Client GAS init
 	 */
@@ -86,6 +86,16 @@ void AMVCharacterBase::GiveAbilities()
 	}
 }
 
+float AMVCharacterBase::GetHealth() const
+{
+	if (BaseAttributeSet)
+	{
+		return BaseAttributeSet->GetHealth();
+	}
+
+	return 0.f;
+}
+
 void AMVCharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -94,4 +104,9 @@ void AMVCharacterBase::Tick(float DeltaTime)
 UAbilitySystemComponent* AMVCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
+}
+
+void AMVCharacterBase::Die()
+{
+	Destroy();
 }
