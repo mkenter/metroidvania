@@ -78,6 +78,9 @@ DerivedDataCache/*
 Plugins/
 Content/Paragon*
 Content/Migrated
+Content/InfinityBladeWeapons
+Content/RockMonster
+Content/sA_Megapack_v1
 
 # Remove these if needed if something doesn't work after cloning project
 Content/__*

@@ -67,7 +67,7 @@ void AMVCharacterBase::InitializeAttributes()
 
 		if (SpecHandle.IsValid())
 		{
-			FActiveGameplayEffectHandle GameplayEffectHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(
+			AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(
 				*SpecHandle.Data.Get());
 		}
 	}
