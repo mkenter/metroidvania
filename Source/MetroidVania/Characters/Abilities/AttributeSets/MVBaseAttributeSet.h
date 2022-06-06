@@ -24,6 +24,8 @@ class METROIDVANIA_API UMVBaseAttributeSet : public UAttributeSet
 public:
 	UMVBaseAttributeSet();
 
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Attributes.Base", ReplicatedUsing = OnRep_Health)
@@ -34,9 +36,9 @@ public:
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS(UMVBaseAttributeSet, MaxHealth);
 
-	UPROPERTY(BlueprintReadOnly, Category = "Damage")
+	UPROPERTY(BlueprintReadOnly, Category = "Attributes.Base", ReplicatedUsing = OnRep_MaxHealth)
 	FGameplayAttributeData Damage;
-	ATTRIBUTE_ACCESSORS(UMVBaseAttributeSet, Damage)
+	ATTRIBUTE_ACCESSORS(UMVBaseAttributeSet, Damage);
 
 	UFUNCTION()
 	virtual void OnRep_Health(const FGameplayAttributeData& OldHealth);

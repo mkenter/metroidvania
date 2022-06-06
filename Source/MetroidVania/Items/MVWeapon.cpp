@@ -13,7 +13,6 @@ AMVWeapon::AMVWeapon(): Damage(0.f)
 {
 	DamageCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("DamageCollisionComponent"));
 	DamageCollisionComponent->SetupAttachment(GetRootComponent());
-	DamageCollisionComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	DamageCollisionComponent->SetCollisionObjectType(ECC_WorldDynamic);
 	DamageCollisionComponent->SetCollisionResponseToAllChannels(ECR_Ignore);
 	DamageCollisionComponent->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
@@ -30,6 +29,7 @@ void AMVWeapon::BeginPlay()
 	Super::BeginPlay();
 
 	DamageCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AMVWeapon::DamageCollisionComponentOnOverlapBegin);
+	DamageCollisionComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 void AMVWeapon::InitializeAttributes()
@@ -74,9 +74,7 @@ void AMVWeapon::DamageCollisionComponentOnOverlapBegin(UPrimitiveComponent* Over
 	{
 		return;
 	}
-
-	UE_LOG(LogTemp, Warning, TEXT("OtherActor: %s"), *OtherActor->GetName());
-
+	
 	AMVCharacterBase* CharacterBase = Cast<AMVCharacterBase>(OtherActor);
 
 	if (CharacterBase)
