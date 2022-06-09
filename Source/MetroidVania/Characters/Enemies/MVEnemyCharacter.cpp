@@ -3,3 +3,6 @@
 
 #include "MetroidVania/Characters/Enemies/MVEnemyCharacter.h"
 
+AMVEnemyCharacter::AMVEnemyCharacter()
+{
+}
