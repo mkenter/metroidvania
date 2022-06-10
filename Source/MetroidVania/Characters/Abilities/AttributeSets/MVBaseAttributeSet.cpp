@@ -39,14 +39,14 @@ void UMVBaseAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCall
 			const float NewHealth = GetHealth() - LocalDamageDone;
 			SetHealth(FMath::Clamp(NewHealth, 0.f, GetMaxHealth()));
 
-			if (TargetCharacter)
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Damage done to %s: %f"), *TargetCharacter->GetName(), LocalDamageDone);
-			}
+			// if (TargetCharacter)
+			// {
+			// 	UE_LOG(LogTemp, Warning, TEXT("Damage done to %s: %f"), *TargetCharacter->GetName(), LocalDamageDone);
+			// }
 
 			if (TargetCharacter && bWasAlive && NewHealth == 0.f)
 			{
-				UE_LOG(LogTemp, Warning, TEXT("%s died"), *TargetCharacter->GetName());
+				// UE_LOG(LogTemp, Warning, TEXT("%s died"), *TargetCharacter->GetName());
 				TargetCharacter->Die();
 			}
 		}
