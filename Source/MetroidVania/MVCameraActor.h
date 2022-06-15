@@ -13,5 +13,10 @@ UCLASS()
 class METROIDVANIA_API AMVCameraActor : public ACameraActor
 {
 	GENERATED_BODY()
+
+public:
+	AMVCameraActor();
+
+	virtual void Tick(float DeltaSeconds) override;	
 	
 };

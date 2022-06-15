@@ -6,6 +6,8 @@
 #include "Abilities/MVBaseAbilitySystemComponent.h"
 #include "Abilities/MVGameplayAbility.h"
 #include "Abilities/AttributeSets/MVBaseAttributeSet.h"
+#include "GameFramework/GameModeBase.h"
+#include "MetroidVania/MVGameModeBase.h"
 
 AMVCharacterBase::AMVCharacterBase()
 {
@@ -94,6 +96,23 @@ float AMVCharacterBase::GetHealth() const
 	}
 
 	return 0.f;
+}
+
+int32 AMVCharacterBase::GetCurrentRoom() const
+{
+	AGameModeBase* GameMode = GetWorld()->GetAuthGameMode();
+
+	if (GameMode)
+	{
+		AMVGameModeBase* MetroidVaniaGameMode = Cast<AMVGameModeBase>(GameMode);
+
+		if (MetroidVaniaGameMode)
+		{
+			return MetroidVaniaGameMode->GetCurrentRoom();
+		}
+	}
+
+	return 0;
 }
 
 void AMVCharacterBase::Tick(float DeltaTime)

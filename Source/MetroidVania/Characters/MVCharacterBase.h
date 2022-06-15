@@ -23,21 +23,24 @@ protected:
 	
 	virtual void InitializeAttributes();
 	virtual void GiveAbilities();
+	
+	float GetHealth() const;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Abilities")
 	class UMVBaseAbilitySystemComponent* AbilitySystemComponent;
-
-	UPROPERTY()
-	class UMVBaseAttributeSet* BaseAttributeSet;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities")
-	TSubclassOf<class UGameplayEffect> DefaultAttributeEffect;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities")
 	TArray<TSubclassOf<class UMVGameplayAbility>> DefaultAbilities;
 
-	float GetHealth() const;
+	int32 GetCurrentRoom() const; 
 
+private:
+	UPROPERTY()
+	class UMVBaseAttributeSet* BaseAttributeSet;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class UGameplayEffect> DefaultAttributeEffect;
+	
 public:
 	virtual void Tick(float DeltaTime) override;
 

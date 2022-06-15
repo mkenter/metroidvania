@@ -19,4 +19,11 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+
+private:
+	int32 CurrentRoom;
+
+public:
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE int32 GetCurrentRoom() const { return CurrentRoom; }
 };

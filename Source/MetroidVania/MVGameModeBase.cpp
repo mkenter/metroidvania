@@ -5,7 +5,7 @@
 
 #include "Kismet/GameplayStatics.h"
 
-AMVGameModeBase::AMVGameModeBase()
+AMVGameModeBase::AMVGameModeBase(): CurrentRoom(0)
 {
 }
 
