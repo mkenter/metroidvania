@@ -46,6 +46,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities")
 	TArray<TSubclassOf<class UMVGameplayAbility>> DefaultAbilities;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities")
+	TArray<TSubclassOf<class UMVGameplayAbility>> GrantedAbilities;
+
 	UFUNCTION()
 	void DamageCollisionComponentOnOverlapBegin(UPrimitiveComponent* OverlappedComponent,
 									 AActor* OtherActor,
@@ -57,8 +60,17 @@ protected:
 public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Abilities")
+	TSubclassOf<UGameplayEffect> EquipEffect;
+
 	UFUNCTION()
 	void OnEquip(AMVPlayerCharacter* NewOwner);
+
+	UFUNCTION()
+	void GiveAbilitiesToOwner();
+
+	UFUNCTION()
+	void RemoveAbilitiesFromOwner();
 
 	UFUNCTION(BlueprintCallable)
 	void ActivateCollision();

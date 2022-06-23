@@ -184,6 +184,10 @@ void AMVPlayerCharacter::EquipWeapon(AMVWeapon* WeaponToEquip)
 		}
 
 		EquippedWeapon = WeaponToEquip;
+
+		const FGameplayEffectContextHandle GameplayEffectContextHandle;
+		const UGameplayEffect* EquipEffect = NewObject<UGameplayEffect>(this, EquippedWeapon->EquipEffect);
+		AbilitySystemComponent->ApplyGameplayEffectToSelf(EquipEffect, 1, GameplayEffectContextHandle);
 	}
 }
 
