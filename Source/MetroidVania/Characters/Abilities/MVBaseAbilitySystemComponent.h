@@ -13,4 +13,8 @@ UCLASS()
 class METROIDVANIA_API UMVBaseAbilitySystemComponent : public UAbilitySystemComponent
 {
 	GENERATED_BODY()
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	bool TriggerAbilityByClass(TSubclassOf<UGameplayAbility> InAbilityToActivate, bool bAllowRemoteActivation, FGameplayAbilitySpecHandle& TriggeredAbility);
 };

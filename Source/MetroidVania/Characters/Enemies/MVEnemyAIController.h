@@ -10,8 +10,16 @@
  * 
  */
 UCLASS()
-class METROIDVANIA_API AEnemyAIController : public AAIController
+class METROIDVANIA_API AMVEnemyAIController : public AAIController
 {
 	GENERATED_BODY()
 
+public:
+
+	AMVEnemyAIController();
+
+	virtual void SetPawn(APawn* InPawn) override;
+
+	UPROPERTY()
+	UBlackboardComponent* BlackboardComponent;
 };

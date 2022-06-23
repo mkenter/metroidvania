@@ -20,4 +20,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Abilities")
 	EAbilitySystemInputID AbilityInputID = EAbilitySystemInputID::None;
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE	FGameplayTagContainer GetActivationOwnedTags() const { return ActivationOwnedTags;} 
 };
